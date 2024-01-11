@@ -1,0 +1,68 @@
+﻿@page
+@model WebApplication1.Pages.Studenti.IndexModel
+@{
+}
+
+<h1>Lista studenților:</h1>
+
+
+<form method="get">
+    <label for="studentId">Introduceți ID-ul studentului:</label>
+    <input type="text" id="studentId" name="studentId" />
+    <button type="submit" onclick="authenticate()" >Căutare</button>
+    <button type="button" onclick="authenticate()" class="btn btn-primary" id="exportBtn">Export as JSON</button>
+</form>
+
+
+@if (!String.IsNullOrEmpty(Request.Query["studentId"]))
+{
+    var studentId = Convert.ToInt32(Request.Query["studentId"]);
+    var student = Model.listaStudenti.FirstOrDefault(s => s.id == studentId);
+
+    @if (student != null)
+    {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Grupă</th>
+                            <th>Oraș</th>
+                            <th>Nume</th>
+                            <th>Prenume</th>
+                            <th>Note</th>
+                            <th>Medie generală</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@student.id</td>
+                            <td>@student.grupa</td>
+                            <td>@student.oras</td>
+                            <td>@student.nume</td>
+                            <td>@student.prenume</td>
+                            <td>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Materie</th>
+                                            <th>Notă</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                @foreach (var nota in student.note)
+                                {
+                                                <tr>
+                                                    <td>@nota.materie</td>
+                                                    <td class="aliniere-dreapta">@nota.nota</td>
+                                                </tr>
+                                }
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td>@Math.Round(student.medie, 2)</td>
+                        </tr>
+                    </tbody>
+                </table>
+    }
+}
+

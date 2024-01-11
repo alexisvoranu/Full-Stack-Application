@@ -1,0 +1,1 @@
+I have developed a web application using C# and T-SQL to analyze college students' academic performance. It examines over 100 grades, connects to a database, generates insightful reports, and offers a user-friendly interface, including convenient data export in JSON format for individual students.
